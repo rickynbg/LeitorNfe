@@ -1,0 +1,247 @@
+
+@model LeitorNfe.Models.NotaFiscal
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Cadastrar Nota Fiscal</h1>
+<hr />
+@if(Model == null)
+{
+<div class="row">
+    <div class="col-md-8" >
+        <form id="form_open_file" asp-action="UploadFile" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                <label asp-for="ArquivoXML" class="control-label"></label>
+                <div class="row">
+                        <input class="form-control col-sm" asp-for="ArquivoXML" class="form-control" type="file" onchange="open_file();"/>   
+                        <span class="col-sm-1"></span> 
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+}
+else
+{
+    <br />
+    
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumNota):
+        </dt>
+        <dd class = "col-sm-4">
+            @Html.DisplayFor(model => model.NumNota)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DataEmissao):
+        </dt>
+        <dd class = "col-sm-4">
+            @Html.DisplayFor(model => model.DataEmissao)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ChaveAcesso):
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ChaveAcesso):
+        </dd>
+
+        <hr />
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Emitente):
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Emitente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmitCNPJ):
+        </dt>
+        <dd class = "col-sm-4">
+            @Html.DisplayFor(model => model.EmitCNPJ)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmitEmail):
+        </dt>
+        <dd class = "col-sm-4">
+            @Html.DisplayFor(model => model.EmitEmail)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmitEndereco):
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EmitEndereco)
+        </dd>
+
+        <hr />
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Destinatario):
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Destinatario)
+        </dd>
+        @if (Model.DestCNPJ != null)
+        {
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DestCNPJ):
+        </dt>
+        <dd class = "col-sm-4">
+            @Html.DisplayFor(model => model.DestCNPJ)
+        </dd>
+        }
+        else
+        {
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DestCPF):
+        </dt>
+        <dd class = "col-sm-4">
+            @Html.DisplayFor(model => model.DestCPF)
+        </dd>
+        }
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DestEmail):
+        </dt>
+        <dd class = "col-sm-4">
+            @Html.DisplayFor(model => model.DestEmail)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DestEndereco):
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DestEndereco)
+        </dd>
+
+    </dl>
+
+    <hr />
+    <br />
+    @if (Model != null){
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NotaFiscalItems.FirstOrDefault().NumItem)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NotaFiscalItems.FirstOrDefault().CodProd)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NotaFiscalItems.FirstOrDefault().Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NotaFiscalItems.FirstOrDefault().QuantidadeComprada)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NotaFiscalItems.FirstOrDefault().ValUnit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NotaFiscalItems.FirstOrDefault().ValTotal)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.NotaFiscalItems) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumItem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodProd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td style="text-align: center;">
+                    @Html.DisplayFor(modelItem => item.QuantidadeComprada)
+                </td>
+                <td style="text-align: right; padding-right: 18px;">
+                    @Html.DisplayFor(modelItem => item.ValUnit)
+                </td>
+                <td style="text-align: right; padding-right: 22px;">
+                    @Html.DisplayFor(modelItem => item.ValTotal)
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalNotaFiscal)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.TotalNotaFiscal)
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    }
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-8" >
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div class="form-group col-md-3">
+                    <label asp-for="NumPedidoCompra" class="control-label"></label>
+                    <input asp-for="NumPedidoCompra" class="form-control" />
+                    <span asp-validation-for="NumPedidoCompra" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label asp-for="Comentario" class="control-label"></label>
+                    <input asp-for="Comentario" class="form-control" maxlength="255"/>
+                    <span asp-validation-for="Comentario" class="text-danger"></span>
+                </div>
+                <br />
+                <input class="form-control" asp-for="ArquivoXML" class="form-control" type="hidden"/> 
+                <input class="form-control" asp-for="NomeArquivo" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="NumPedidoCompra" class="form-control" type="hidden"/>
+                <input class="form-control" asp-for="DataEmissao" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="NumNota" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="Emitente" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="Destinatario" class="form-control" type="hidden"/> 
+                <input class="form-control" asp-for="ChaveAcesso" class="form-control" type="hidden"/>  
+
+
+
+                <input class="form-control" asp-for="EmitCNPJ" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="EmitEndereco" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="EmitEmail" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="DestCNPJ" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="DestCPF" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="DestEmail" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="DestEndereco" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="TotalNotaFiscal" class="form-control" type="hidden"/>  
+                <input class="form-control" asp-for="NotaFiscalItems" class="form-control" type="hidden"/>  
+                
+                <div class="form-group">
+                    <input type="submit" value="Salvar" class="btn btn-primary" 
+                        data-confirm="Deseja salvar os dados da NFe @Model.ArquivoXML.FileName \n e o número de pedido @Model.NumPedidoCompra no db?"/>
+                    <a type="button" class="btn btn-secondary" asp-action="Index">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+}
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script type="text/javascript">
+        function open_file() {
+            document.getElementById('form_open_file').submit();
+        };
+
+        jQuery(document).ready(function () {
+            jQuery('[data-confirm]').click(function (e) {
+                if (!confirm(jQuery(this).attr("data-confirm")))
+                {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

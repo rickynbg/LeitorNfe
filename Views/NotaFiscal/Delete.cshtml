@@ -1,0 +1,70 @@
+@model LeitorNfe.Models.NotaFiscal
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Apagar Nota Fiscal</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeArquivo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NomeArquivo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumPedidoCompra)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumPedidoCompra)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Comentario)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Comentario)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumNota)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumNota)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Emitente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Emitente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Destinatario)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Destinatario)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Apagar" class="btn btn-danger" 
+        data-confirm="Tem certeza que que deseja apagar a NFe @Model.NomeArquivo? Esse procedimento não pode ser revertido"/>
+        <a class="btn btn-primary" asp-action="Index">Voltar</a>
+    </form>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('[data-confirm]').click(function (e) {
+                if (!confirm(jQuery(this).attr("data-confirm")))
+                {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}
